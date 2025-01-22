@@ -285,8 +285,25 @@ def fazerComentario():
     return redirect(url_for('paginaComentario'))
 
 
-
-
+@app.route('/historicoComentarios')
+def historicoComentarios():
+    historico = []
+    produtos = Produto.query.all()
+    
+    for produto in produtos:
+        listaComentarios = []
+        comentarios = Comentario.query.filter_by(ProdutoID = produto.ID).all()
+        print(comentarios)
+        for comentario in comentarios:
+            listaComentarios.append(comentario.Comentario)
+        print(listaComentarios)
+        objProduto = {
+            'nomeProduto':produto.Nome,
+            'comentarios':listaComentarios
+        }
+        historico.append(objProduto)
+    
+    return render_template('historicoComentarios.html',historico=historico)
 
 
 

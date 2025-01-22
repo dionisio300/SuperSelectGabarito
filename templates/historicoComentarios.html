@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{{super()}}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10 mt-5">
+            <h1 class="text-light text-center">Histórico de comentários</h1>
+            <p class="text-light text-center">Histórico de todos os comentários realizados em cada produto</p>
+
+            <section class="container bg-light rounded">
+                <table class="table table-striped table-hover">
+                  <thead>
+                    <h3>Histórico </h3>
+                    <tr>
+                      
+                      <th scope="col">Produto</th>
+                      <th scope="col">Comentário</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    {% for produto in historico %}
+
+
+                    <tr>
+                      <td id="idIndex" scope="col">{{produto.nomeProduto}}</td>
+                      {% for comentario in produto.comentarios %}
+ 
+                        <tr>
+                          <td></td>
+                          <td id="idIndex" scope="col">{{comentario}}</td>
+                        </tr>
+
+                      {% endfor %}
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </section>
+
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %}
