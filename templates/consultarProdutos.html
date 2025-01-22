@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{{super()}}
+
+{% block content %}
+
+<section class="text-light">
+  <h1 class="text-center mt-5 mb-3">Listagem de Produtos</h1>
+  <p class="text-center">Veja todos os produtos cadastrados no sistema</p>
+</section>
+
+<section class="container bg-light rounded">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nome do Produto</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Preço</th>
+        <th scope="col">Data de validade</th>
+        <th scope="col">Categoria</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for produto in produtos %}
+
+      <tr>
+        <td id="idIndex{{loop.index}}" scope="col">{{loop.index}}</td>
+        <td id="nomeIndex{{loop.index}}" scope="col">{{produto.Nome}}</td>
+        <td id="descricaoIndex{{loop.index}}" scope="col">{{produto.Descricao}}</td>
+        <td id="precoIndex{{loop.index}}" scope="col">{{produto.Preco}}</td>
+        <td id="validadeIndex{{loop.index}}" scope="col">{{produto.Validade}}</td>
+        <td id="categoriaIndex{{loop.index}}" scope="col">{{produto.Categoria}}</td>
+        {% if tipo == 'admin'%}
+        <td scope="col">
+          <form id="enviarID" action="{{ url_for('editarProduto') }}" method="POST">
+            <input type="hidden" name="id_editar" value="{{produto.ID}}">
+
+            <a class="btn btn btn-warning" data-bs-toggle="modal" data-bs-target="#Modal2{{loop.index}}">
+              <i class="bi bi-pencil"></i>
+            </a>
+
+
+            <div class="modal fade" id="Modal2{{loop.index}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar Produto?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <section>
+                      <div class="container">
+                        <form class="w-50 d-flex flex-column mx-auto" method="POST" action="">
+                          <div class="mb-3">
+                            <label for="nome" class="form-label">Nome do Produto</label>
+                            <input value="{{produto.Nome}}" type="text" class="form-control" id="nome" name="nome"
+                              required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="descricao" class="form-label">Descrição</label>
+                            <textarea  class="form-control" id="descricao" name="descricao" required>{{produto.Descricao}}</textarea>
+                          </div>
+                          <div class="mb-3">
+                            <label for="categoria" class="form-label">Categoria</label>
+                            <select id="categoria" class="form-select" name="categoria" required>
+                              <option selected>{{produto.Categoria}}</option>
+                              <option value="Higiene Pessoal">Higiene Pessoal</option>
+                              <option value="Alimentos">Alimentos</option>
+                              <option value="Bebidas">Bebidas</option>
+                              <option value="Produtos de limpeza">Produtos de limpeza</option>
+                            </select>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label" for="preco">Preço (R$)</label>
+                            <input value="{{produto.Preco}}" id="preco" type="number" step="0.01" class="form-control" name="preco" required>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label" for="quantidade">Quantidade</label>
+                            <input value="{{produto.Quantidade}}" id="quantidade" type="number" step="1" class="form-control" name="quantidade"
+                              required>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label" for="data_validade">Data de validade</label>
+                            
+                            <input value="{{produto.Validade}}" id="data_validade" type="date" class="form-control" name="data_validade">
+                          </div>
+                          
+                          <!-- <button type="submit" class="btn btn-primary">Cadastrar Produto</button> -->
+                        </form>
+                      </div>
+                    </section>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning">Editar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </td>
+        <td scope="col">
+          <form action="{{ url_for('deletarProduto') }}" method="POST">
+            <input type="hidden" name="id_deletar" value="{{produto.ID}}">
+            <a type="button" class="btn btn btn-danger" data-bs-toggle="modal" data-bs-target="#Modal1">
+              <i class="bi bi-trash"></i>
+            </a>
+
+            <!-- Modal -->
+            <div class="modal fade" id="Modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Deletar Produto?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Tem certeza que deseja deletar este produto?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Deletar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </td>
+
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</section>
+<script>
+  function escreverModal(index){
+    nome = "{{produtos[index]}}"
+    console.log(nome)
+  }
+</script>
+
+{% endblock %}

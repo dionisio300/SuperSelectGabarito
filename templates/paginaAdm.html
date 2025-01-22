@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{{super()}}
+
+{% block content %}
+
+    <section>
+        <div class="text-center text-light my-5">
+            <h1 class="my-3">Bem vindo <span id="nome">{{nome}}</span> ao SuperSelect</h1>
+            <p>Gerencie produtos, vizualize relatórios e otimize o controle do seu supermercado</p>
+        </div>
+    </section>
+
+    <section class="container-fluid py-5">
+        <div class="row justify-content-center text-center bg-light py-5">
+            <div class="col-md-3 card my-3 mx-2 py-5">
+                <h4>Consultar produtos</h4>
+                <p>Área para a consulta de todos os produtos cadastrados</p>
+                <a href="{{url_for('consultarProdutos')}}" class="btn btn-success w-50 mx-auto">Acessar Área</a>
+            </div>
+
+            <div class="col-md-3 card my-3 mx-2 py-5">
+                <h4>Fazer Comentários</h4>
+                <p>Área para inserir comentários nos produtos cadastrados</p>
+                <a href="{{url_for('paginaComentario')}}" class="btn btn-success w-50 mx-auto">Acessar Área</a>
+            </div>
+
+            <div class="col-md-3 card my-3 mx-2 py-5">
+                <h4>Cadastrar novos produtos</h4>
+                <p>Área para cadastro de novos produtos</p>
+                <a href="{{url_for('paginaCadastroProduto')}}" class="btn btn-success w-50 mx-auto">Acessar Área</a>
+            </div>
+
+
+        </div>
+    </section>
+    {% endblock %}
