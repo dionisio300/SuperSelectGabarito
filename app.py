@@ -118,8 +118,8 @@ def paginaCadastroProduto():
         )
         db.session.add(novo_produto)
         db.session.commit()
-        
-    return render_template('paginaCadastroProduto.html',produtos=produtos)
+    tipo = session['tipo']
+    return render_template('paginaCadastroProduto.html',produtos=produtos,tipo = tipo)
 
 
 @app.route('/consultarProdutos', methods = ['GET', 'POST'])
@@ -247,8 +247,8 @@ def paginaComentario():
             print(comentariosProduto[0])
         
         return render_template('listarComentarios.html', comentariosProduto=comentariosProduto)
-    
-    return render_template('paginaComentario.html', prodComentario=prodComentario, produtos=produtos)
+    tipo = session['tipo']
+    return render_template('paginaComentario.html', prodComentario=prodComentario, produtos=produtos,tipo=tipo)
 
 
 @app.route('/fazerComentario', methods = ['GET', 'POST'])
@@ -293,17 +293,28 @@ def historicoComentarios():
     for produto in produtos:
         listaComentarios = []
         comentarios = Comentario.query.filter_by(ProdutoID = produto.ID).all()
+        
         print(comentarios)
         for comentario in comentarios:
-            listaComentarios.append(comentario.Comentario)
+            user = Usuario.query.filter_by(ID = comentario.UsuarioID).first()
+            objComentario={
+                'comentario':comentario.Comentario,
+                'usuario':user.Nome,
+                'dataHora':comentario.DataHora
+            }
+
+            listaComentarios.append(objComentario)
+
+
+
         print(listaComentarios)
         objProduto = {
             'nomeProduto':produto.Nome,
             'comentarios':listaComentarios
         }
         historico.append(objProduto)
-    
-    return render_template('historicoComentarios.html',historico=historico)
+    tipo=session['tipo']
+    return render_template('historicoComentarios.html',historico=historico,tipo=tipo)
 
 
 

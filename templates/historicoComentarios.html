@@ -19,6 +19,8 @@
                       
                       <th scope="col">Produto</th>
                       <th scope="col">Comentário</th>
+                      <th scope="col">Nome</th>
+                      <th scope="col">Data</th>
                       
                     </tr>
                   </thead>
@@ -33,7 +35,15 @@
  
                         <tr>
                           <td></td>
-                          <td id="idIndex" scope="col">{{comentario}}</td>
+                          <td id="" scope="col">
+                            {{comentario.comentario}}
+                          </td>
+                          <td id="" scope="col">
+                            {{comentario.usuario}}
+                          </td>
+                          <td id="" scope="col">
+                            {{comentario.dataHora}}
+                          </td>
                         </tr>
 
                       {% endfor %}

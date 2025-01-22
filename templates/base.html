@@ -48,10 +48,12 @@
             <a class="nav-link ms-2" aria-current="page" href="{{url_for('consultarProdutos')}}">Produtos</a>
             
             <a class="nav-link  ms-2" href="{{url_for('paginaComentario')}}">Comentários</a>
-            
+            {% if tipo == 'admin' %}
             <a class="nav-link  ms-2" href="{{url_for('paginaCadastroProduto')}}">Cadastro</a>
-            
-              <a class="nav-link  ms-2" href="{{url_for('logout')}}" >Sair</a>
+            {% endif %}
+            <a class="nav-link  ms-2" href="{{url_for('historicoComentarios')}}">Histórico</a>
+
+            <a class="nav-link  ms-2" href="{{url_for('logout')}}" >Sair</a>
             
             
             
